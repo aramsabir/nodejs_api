@@ -1,0 +1,21 @@
+<table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Full name</th>
+        <th scope="col">User name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let element of users; let i = index">
+        <th scope="row">{{(i+1)}}</th>
+        <td>{{element.full_name}}</td>
+        <td>{{element.user_name}}</td>
+        <td>{{element.email}}</td>
+        <td>{{element.role_id?.name}}</td>
+      </tr>
+     
+    </tbody>
+  </table>
