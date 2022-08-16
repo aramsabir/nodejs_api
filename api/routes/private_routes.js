@@ -10,6 +10,7 @@ module.exports = function (app) {
     var checkAccess = middleware.checkAccess;
 
     app.get('/users',checkExpireToken, (req, res, cb) => { addHeader(req, res, cb, resources.UserRead) }, checkAccess,userController.List)
+       .get('/userinfo',checkExpireToken, userController.UserInformation)
        .get('/user',checkExpireToken, (req, res, cb) => { addHeader(req, res, cb, resources.UserRead) }, checkAccess,userController.One)
        .post('/user',checkExpireToken, (req, res, cb) => { addHeader(req, res, cb, resources.UserWrite) }, checkAccess,userController.newData)
        .put('/user',checkExpireToken, (req, res, cb) => { addHeader(req, res, cb, resources.UserUpdate) }, checkAccess,userController.putData)
@@ -21,6 +22,12 @@ module.exports = function (app) {
        .put('/role',checkExpireToken, (req, res, cb) => { addHeader(req, res, cb, resources.RoleUpdate) }, checkAccess,roleController.Put)
        .delete('/role',checkExpireToken, (req, res, cb) => { addHeader(req, res, cb, resources.RoleDelete) }, checkAccess,roleController.Delete)
 
+
+
+    app.get('/check', checkExpireToken, middleware.afterCheck);
+    app.get('/', checkExpireToken, middleware.testToken);
+
+  
 }
 
 function addHeader(req, res, cb, access) {

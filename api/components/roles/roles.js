@@ -60,12 +60,10 @@ schema.methods.validation = async function (body, key) {
         return ({ status: true });
     case 'edit':
       if (!body._id) {
-        res.json({ status: false, message: "ID required" })
-        return 0
+        return ({ status: false, message: "ID required" })
       }
       if (!mongoose.Types.ObjectId.isValid(body._id)) {
-        res.json({ status: false, message: "ID not valid" });
-        return 0;
+        return ({ status: false, message: "ID not valid" });
       }
 
       if (!body.name || body.name == '') {
@@ -81,21 +79,17 @@ schema.methods.validation = async function (body, key) {
         return ({ status: true });
     case 'delete':
       if (!body._id) {
-        res.json({ status: false, message: "ID required" })
-        return 0
+        return ({ status: false, message: "ID required" })
       }
       if (!mongoose.Types.ObjectId.isValid(body._id)) {
-        res.json({ status: false, message: "ID not valid" });
-        return 0;
+        return ({ status: false, message: "ID not valid" });
       }
     case 'find':
       if (!body._id) {
-        res.json({ status: false, message: "ID required" })
-        return 0
+        return ({ status: false, message: "ID required" })
       }
       if (!mongoose.Types.ObjectId.isValid(body._id)) {
-        res.json({ status: false, message: "ID not valid" });
-        return 0;
+        return ({ status: false, message: "ID not valid" });
       }
 
     default:

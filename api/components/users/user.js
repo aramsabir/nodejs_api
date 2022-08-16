@@ -4,16 +4,16 @@ mongoose.Promise = global.Promise;
 var schema = mongoose.Schema({
   full_name: {
     type: String,
-    trim:true,
+    trim: true,
   },
   user_name: {
     type: String,
     lowercase: true,
-    trim:true
+    trim: true
   },
   email: {
     type: String,
-    trim:true,
+    trim: true,
     lowercase: true,
     default: "unnkown@example.com",
   },
@@ -104,46 +104,44 @@ schema.methods.validation = async function (body, key) {
         return ({ status: false, message: 'E-mail required or not valid' });
       }
       if (!validEmail(body.email)) {
-        res.json({ status: false, message: "E-mail not valid" });
-        return 0;
+        return ({ status: false, message: "E-mail not valid" });
+
       }
       if (!body.password || body.password == '') {
         return ({ status: false, message: 'Password required or not valid' });
       }
-      if (body.password.length < 5 ) {
+      if (body.password.length < 5) {
         return ({ status: false, message: 'Your input should be more than 5 characters for password' });
       }
 
       if (!body.role_id) {
-        res.json({ status: false, message: "Role ID required" })
-        return 0
+        return ({ status: false, message: "Role ID required" })
       }
       if (!mongoose.Types.ObjectId.isValid(body.role_id)) {
-        res.json({ status: false, message: "Role ID not valid" });
-        return 0;
+        return ({ status: false, message: "Role ID not valid" });
+
       }
       var roleFinder = await mongoose.model('Role', schema).findOne({ _id: body.role_id }).exec();
       if (!roleFinder) {
         return ({ status: false, message: 'Role not found' });
       }
-      var item_finder = await mongoose.model('User', schema).findOne({$or:[{ user_name: body.user_name },{ email: body.email }]}).exec();
+      var item_finder = await mongoose.model('User', schema).findOne({ $or: [{ user_name: body.user_name }, { email: body.email }] }).exec();
       if (item_finder) {
         return ({ status: false, message: 'Doublicate happened in user name or E-mail' });
       } else
         return ({ status: true });
     case 'edit':
       if (!body._id) {
-        res.json({ status: false, message: "ID required" })
-        return 0
+        return ({ status: false, message: "ID required" })
       }
       if (!mongoose.Types.ObjectId.isValid(body._id)) {
-        res.json({ status: false, message: "ID not valid" });
-        return 0;
+        return ({ status: false, message: "ID not valid" });
+
       }
-      var findExistData = await mongoose.model('User', schema).findOne({_id:body._id}).exec();
+      var findExistData = await mongoose.model('User', schema).findOne({ _id: body._id }).exec();
       if (findExistData) {
         return ({ status: false, message: 'Data not found for update' });
-      } 
+      }
       if (!body.full_name || body.full_name == '') {
         return ({ status: false, message: 'Full name required or not valid' });
       }
@@ -160,43 +158,40 @@ schema.methods.validation = async function (body, key) {
         return ({ status: false, message: 'E-mail required or not valid' });
       }
       if (!validEmail(body.email)) {
-        res.json({ status: false, message: "E-mail not valid" });
-        return 0;
+        return ({ status: false, message: "E-mail not valid" });
+
       }
       if (!body.role_id) {
-        res.json({ status: false, message: "Role ID required" })
-        return 0
+        return ({ status: false, message: "Role ID required" })
       }
       if (!mongoose.Types.ObjectId.isValid(body.role_id)) {
-        res.json({ status: false, message: "Role ID not valid" });
-        return 0;
+        return ({ status: false, message: "Role ID not valid" });
+
       }
       var roleFinder = await mongoose.model('Role', schema).findOne({ _id: body.role_id }).exec();
       if (!roleFinder) {
         return ({ status: false, message: 'Role not found' });
       }
-      var item_finder = await mongoose.model('User', schema).findOne({$and:[{_id:{$ne:body._id}},{$or:[{ user_name: body.user_name },{ email: body.email }]}]}).exec();
+      var item_finder = await mongoose.model('User', schema).findOne({ $and: [{ _id: { $ne: body._id } }, { $or: [{ user_name: body.user_name }, { email: body.email }] }] }).exec();
       if (item_finder) {
         return ({ status: false, message: 'Doublicate happened in user name or E-mail' });
       } else
         return ({ status: true });
     case 'delete':
       if (!body._id) {
-        res.json({ status: false, message: "ID required" })
-        return 0
+        return ({ status: false, message: "ID required" })
       }
       if (!mongoose.Types.ObjectId.isValid(body._id)) {
-        res.json({ status: false, message: "ID not valid" });
-        return 0;
+        return ({ status: false, message: "ID not valid" });
+
       }
     case 'find':
       if (!body._id) {
-        res.json({ status: false, message: "ID required" })
-        return 0
+        return ({ status: false, message: "ID required" })
       }
       if (!mongoose.Types.ObjectId.isValid(body._id)) {
-        res.json({ status: false, message: "ID not valid" });
-        return 0;
+        return ({ status: false, message: "ID not valid" });
+
       }
     default:
       break;

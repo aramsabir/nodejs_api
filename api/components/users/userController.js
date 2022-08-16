@@ -1,4 +1,5 @@
 const User = require("./user");
+const authController = require("../auth/authController");
 
 
 exports.newData = async (req, res) => {
@@ -40,6 +41,7 @@ exports.List = async (req, res) => {
 
   var users = await User.find({ $and: [{ deleted_at: null }, search] })
     .populate('creator')
+    .populate('role_id')
     .select({ password: 0 })
     .skip(parseInt(req.query.skip))
     .limit(parseInt(req.query.limit))
@@ -53,7 +55,7 @@ exports.List = async (req, res) => {
     res.json({ status: false, message: "users not found" });
     return 0;
   } else {
-    res.json({ status: true, count, data: roles, message: "list users" });
+    res.json({ status: true, count, data: users, message: "list users" });
     return 0;
   }
 }
@@ -75,6 +77,18 @@ exports.One = async (req, res) => {
     return 0;
   } else {
     res.json({ status: true, data: user, message: "Single user" });
+    return 0;
+  }
+}
+
+exports.UserInformation = async (req, res) => {
+
+  var userInfo  = await authController.userInfo(req.headers)
+  if (!userInfo) {
+    res.json({ status: false, message: "User not found" });
+    return 0;
+  } else {
+    res.json({ status: true, data: userInfo, message: "Single user" });
     return 0;
   }
 }

@@ -2,6 +2,7 @@ let jwt = require('jsonwebtoken');
 const config = require('./components/auth/config.js');
 const Auth = require("./components/auth/auth");
 const auth = require('./components/auth/authController');
+const authController = require('./components/auth/authController');
 const User = require('./components/users/user');
 
 
@@ -13,9 +14,11 @@ exports.checkToken = async (req, res, next) => {
       // Remove Bearer from string
       token = token.slice(7, token.length);
     }
+
   if (token) {
 
     var user = await Auth.findOne({ token: token }).exec()
+
     if (!user) {
       res.json({
         status: false,
@@ -25,6 +28,8 @@ exports.checkToken = async (req, res, next) => {
       return 0;
     }
     var findUser = await User.findOne({ _id: user.user }).exec()
+    // console.log(token);
+    console.log(findUser);
     if (findUser) {
       if (!findUser.active) {
         res.json({
@@ -140,7 +145,7 @@ exports.getIterfacesIP = async (req, res) => {
 exports.testToken = async (req, res) => {
 
 
-  let userInfo = await auth.userInfo(req.headers);
+  let userInfo = await authController.userInfo(req.headers);
 
   if (userInfo) {
     res.json({
