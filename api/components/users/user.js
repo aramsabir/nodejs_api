@@ -119,7 +119,6 @@ schema.methods.validation = async function (body, key) {
       }
       if (!mongoose.Types.ObjectId.isValid(body.role_id)) {
         return ({ status: false, message: "Role ID not valid" });
-
       }
       var roleFinder = await mongoose.model('Role', schema).findOne({ _id: body.role_id }).exec();
       if (!roleFinder) {
@@ -197,6 +196,7 @@ schema.methods.validation = async function (body, key) {
       break;
   }
 }
+
 
 schema.virtual("User", {
   ref: "User", // The model to use

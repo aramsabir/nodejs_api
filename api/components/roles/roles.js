@@ -53,7 +53,7 @@ schema.methods.validation = async function (body, key) {
       if (body.name.length < 2 || body.name.length > 30) {
         return ({ status: false, message: 'Your input should be in 3 to 30 characters for role name' });
       }
-      var item_finder = await mongoose.model('Role', schema).findOne({ name: body.name }).exec();
+      var item_finder = await mongoose.model('Role', schema).findOne({ $and:[{deleted_at:null},{name: body.name}] }).exec();
       if (item_finder) {
         return ({ status: false, message: 'Doublicated data' });
       } else
@@ -72,7 +72,7 @@ schema.methods.validation = async function (body, key) {
       if (body.name.length < 2 || body.name.length > 30) {
         return ({ status: false, message: 'Your input should be in 2 to 30 character for role name' });
       }
-      var item_finder = await mongoose.model('Role', schema).findOne({ $and: [{ _id: { $ne: body._id } }, { name: body.name }] }).exec();
+      var item_finder = await mongoose.model('Role', schema).findOne({ $and: [{ _id: { $ne: body._id } }, { name: body.name },{deleted_at:null}] }).exec();
       if (item_finder) {
         return ({ status: false, message: 'Doublicated data' });
       } else
@@ -84,6 +84,8 @@ schema.methods.validation = async function (body, key) {
       if (!mongoose.Types.ObjectId.isValid(body._id)) {
         return ({ status: false, message: "ID not valid" });
       }
+      return ({ status: true });
+
     case 'find':
       if (!body._id) {
         return ({ status: false, message: "ID required" })
@@ -91,6 +93,7 @@ schema.methods.validation = async function (body, key) {
       if (!mongoose.Types.ObjectId.isValid(body._id)) {
         return ({ status: false, message: "ID not valid" });
       }
+      return ({ status: true });
 
     default:
       break;

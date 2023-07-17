@@ -11,4 +11,4 @@ module.exports = {
   UserWrite: "user:add",
   UserUpdate: "user:update",
   UserDelete: "user:delete",
-};
+};  

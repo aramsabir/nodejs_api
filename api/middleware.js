@@ -1,8 +1,7 @@
 let jwt = require('jsonwebtoken');
 const config = require('./components/auth/config.js');
 const Auth = require("./components/auth/auth");
-const auth = require('./components/auth/authController');
-const authController = require('./components/auth/authController');
+const auth = require('./components/auth/auth');
 const User = require('./components/users/user');
 
 
@@ -145,7 +144,7 @@ exports.getIterfacesIP = async (req, res) => {
 exports.testToken = async (req, res) => {
 
 
-  let userInfo = await authController.userInfo(req.headers);
+  let userInfo = await auth.userInfo(req.headers);
 
   if (userInfo) {
     res.json({

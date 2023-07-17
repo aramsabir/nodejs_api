@@ -1,6 +1,6 @@
 {
-  "name": "api",
-  "version": "1.0.0",
+  "name": "students",
+  "version": "1.1.1",
   "description": "this is the test application api",
   "main": "app.js",
   "scripts": {
@@ -19,5 +19,6 @@
     "path": "^0.12.7",
     "randomstring": "^1.2.2",
     "sha256": "^0.2.0"
-  }
+  },
+  "devDependencies": {}
 }

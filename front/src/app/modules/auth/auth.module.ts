@@ -5,6 +5,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { FormsModule } from '@angular/forms';
+import { PipesModule } from 'src/app/core/pipes/pipes.module';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     AuthRoutingModule,
     FormsModule,
+    PipesModule
     
   ]
 })

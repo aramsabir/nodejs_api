@@ -1,0 +1,28 @@
+{
+  "name": "student",
+  "version": "1.1.2",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aramsabir/nodejs_api.git"
+  },
+  "author": "Aram",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aramsabir/nodejs_api/issues"
+  },
+  "homepage": "https://github.com/aramsabir/nodejs_api#readme",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-useragent": "^1.0.15",
+    "http": "^0.0.1-security",
+    "mongoose": "^6.8.4",
+    "path": "^0.12.7"
+  }
+}

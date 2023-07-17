@@ -34,7 +34,7 @@ exports.List = async (req, res) => {
   }
 
 
-  var roles = await Role.find({ $and: [{ deleted_at: null }, search] })
+  var roles = await Role.find({ $and: [{ deleted_at: null }, ] })
     .populate('creator')
     .skip(parseInt(req.query.skip))
     .limit(parseInt(req.query.limit))
@@ -60,13 +60,13 @@ exports.One = async (req, res) => {
   }
   var _id = req.query._id;
 
-  var roles = await Role.findOne({ $and: [{ deleted_at: null }, { _id: _id }] })
+  var role = await Role.findOne({ $and: [{ deleted_at: null }, { _id: _id }] })
     .exec();
-  if (!roles) {
+  if (!role) {
     res.json({ status: false, message: "Role not found" });
     return 0;
   } else {
-    res.json({ status: true, data: roles, message: "list role" });
+    res.json({ status: true, data: role, message: " role" });
     return 0;
   }
 };

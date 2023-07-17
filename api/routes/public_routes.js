@@ -8,8 +8,8 @@ module.exports = function (app) {
     app.post('/login',authController.login)
 
     app.get('/posts',postController.List)
-
-    app.get('/post',postController.One)
+       .get('/post',postController.One)
+       .post('/post',postController.Post)
 
 }
  
